@@ -19,3 +19,54 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
+
+---
+
+### Arquivo 3: `/agents/finance/hunters/apollo_basic.py` (O Código Real)
+Você precisa de código. Crie esta pasta e arquivo. É um esqueleto que mostra intenção real de integração com a API do Apollo.
+
+```python
+"""
+Lumina - Finance Core
+Apollo Basic Lead Hunter Agent
+
+This agent initializes the connection to the Apollo API and defines the basic scoring
+logic for Consortium leads (Consórcios).
+
+Status: Alpha/Skeleton
+"""
+
+import os
+import requests
+
+class ApolloLeadHunter:
+    def __init__(self, apollo_api_key=None):
+        self.api_key = apollo_api_key or os.getenv("APOLLO_API_KEY")
+        if not self.api_key:
+            raise ValueError("Lumina Finance Agent Error: APOLLO_API_KEY must be set.")
+        self.base_url = "https://api.apollo.io/v1/"
+
+    def health_check(self):
+        """Verify API connectivity."""
+        # Skeleton check
+        return {"status": "authenticated", "agent": "ApolloLeadHunter"}
+
+    def qualify_lead(self, lead_data):
+        """Basic qualification logic for Brazilian Consórcios."""
+        score = 0
+        
+        # Criterion 1: Estimated Revenue (Mock data example)
+        if lead_data.get("estimated_revenue", 0) > 1000000:
+            score += 50
+        
+        # Criterion 2: Job Title (High influence)
+        influence_titles = ["CEO", "Founder", "Owner", "Director", "Investor"]
+        if any(title in lead_data.get("title", "") for title in influence_titles):
+            score += 30
+            
+        return score
+
+# Example Usage (Placeholder)
+# if __name__ == "__main__":
+#     hunter = ApolloLeadHunter()
+#     print(hunter.health_check())
